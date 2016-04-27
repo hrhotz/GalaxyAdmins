@@ -1,0 +1,53 @@
+<tool id="test" name="test" version="1.0.0">
+  <description>foo bar</description>
+  <command interpreter="perl">test.pl $summary.letters > $output </command>
+  <inputs>
+    <page>
+      <conditional name="summary">
+        <param name="numbers" type="select" label="foo"
+	       help="bar">
+          <option value="1">one</option>
+          <option value="2">two</option>
+          <option value="3">three</option>          
+        </param>
+        <when value="1">
+          <param name="letters" type="select" label="more foo"
+		 help="more bar">
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>          
+          </param>
+        </when>
+        <when value="2">
+	<param name="letters" type="select" label="more foo"
+		 help="more bar">
+          <option value="AA">AA</option>
+          <option value="BB">BB</option>
+          <option value="CC">CC</option>          
+          </param>
+        </when>
+        <when value="3">
+	<param name="letters" type="select" label="more foo"
+		 help="more bar">
+          <option value="AAA">AAA</option>
+          <option value="BBB">BBB</option>
+          <option value="CCC">CCC</option>          
+          </param>
+        </when>
+      </conditional>
+    </page>
+  </inputs>
+  <outputs>
+    
+     <data name="output" format="txt" label="foo bar">
+
+    </data>
+     
+  </outputs>
+  <help>
+	
+**What it does**
+
+  </help>
+
+</tool>

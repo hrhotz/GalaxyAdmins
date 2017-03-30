@@ -1,34 +1,33 @@
-# extra python code used for "select sequence files" tool 
+<tool id="test" name="test" version="1.0.0" >
+  <description>dynamic options</description>
 
-import os
-import re
-import operator
-import MySQLdb
-import sys
+  <command>
+    test_tool "$selection.files" $ignoreSeqRunType $output
+  </command>
 
-
-
-
-def files_by_requestF(request):
-    # list all files (or rather samples) from request
-   
-    sys.stdout.write('reguest: ' + str(request) + '\n')
-    
-    files = []
-    p = re.compile("AAA")
-    q = re.compile("AA")
-    r = re.compile("A")
-    
-    if p.search(str(request)):
-    
-        files = [('AAA','AAA.fastq',False),('BBB','BBB.fastq',False),]	
-
-    elif q.search(str(request)):
-    
-        files = [('AA','AA.fastq',False)]	
-    
-    elif r.search(str(request)):
- 
-        files = [('A','A.fastq',False),('D','D.fastq',False),('X','X.fastq',False)]	
 	
-    return files  
+<inputs>
+		
+	<param name="projectName" size="30" type="text" value="Project_name" label="Project name" help="descriptive name for your project (allowed characters: a-z A-Z 0-9 _)" >
+		<validator type="regex" message="Please enter a project name using only the following characters: a-z A-Z 0-9 _">^[\w]+$</validator>
+	</param>
+	
+	<param name="seqrequest" size="30" type="text" label="Request ID" help="type in the number finishing with F or R" />
+	<param name="files" type="select" label="available samples"
+               help="select"
+               display="checkboxes" multiple="true"
+               dynamic_options="files_by_requestF(seqrequest)"/>
+ 
+        <param name="ignoreSeqRunType" type="boolean" label="ignore SeqRunType" truevalue="TRUE" falsevalue="FALSE" checked="true" help="if you ignore the SeqRunType, paired-end fastq files will be treated as unpaired data" />
+
+      
+</inputs>
+<outputs>
+       <data name="output" type="data" format="tabular" label="${projectName}"/>
+  </outputs>
+<help>
+
+
+</help>
+<code file="test_code.py" />
+</tool>
